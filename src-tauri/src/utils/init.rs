@@ -97,12 +97,13 @@ pub async fn resolve_setup(app: &mut App) -> Result<(), Error> {
         }
     }
     // init window
-    let window = tauri::WebviewWindowBuilder::from_config(app_handle, &config)
-        .unwrap()
-        .initialization_script(contents.as_str())
-        .build()
-        .unwrap();
-    let store = app.store(store_name).unwrap();
+let window = tauri::WebviewWindowBuilder::from_config(app_handle, &config)
+    .unwrap()
+    .additional_browser_args("--disable-features=HardwareMediaKeyHandling")
+    .initialization_script(contents.as_str())
+    .build()
+    .unwrap();
+let store = app.store(store_name).unwrap();
     // store.clear();
     let window_size: Option<serde_json::Value> = store.get("window_size");
     let mut width = 0.0;
